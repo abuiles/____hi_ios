@@ -10,13 +10,15 @@ import Foundation
 import RealmSwift
 
 class Location: Object {
-    
-    dynamic var latitude: Double = 0.0
+
+    // MARK: Attributes
+
+    dynamic var id: String        = NSUUID().UUIDString
+    dynamic var date              = NSDate()
+    dynamic var latitude: Double  = 0.0
     dynamic var longitude: Double = 0.0
-    dynamic var title: String = "point"
-    dynamic var subtitle: String = "subtitle"
-    
-//    override static func ignoredProperties() -> [String] {
-//        return ["title", "subtitle"]
-//    }
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

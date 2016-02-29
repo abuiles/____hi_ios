@@ -10,35 +10,63 @@ import UIKit
 import CoreLocation
 import RealmSwift
 import RealmMapView
+import KCFloatingActionButton
 
 class MainViewController: UIViewController, CLLocationManagerDelegate {
 
-  // MARK: Properties
-
+    // MARK: Properties
 
     @IBOutlet weak var mapView: RealmMapView!
-    @IBOutlet weak var locationsCountLabel: UILabel!
+
     let locationManager = CLLocationManager()
-    let db = try! Realm()
+    let db : Realm  = try! Realm()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // MARK: Delegates
         locationManager.delegate = self
+
         if CLLocationManager.authorizationStatus() == .NotDetermined {
-            print("asking for authorization")
             locationManager.requestAlwaysAuthorization()
         } else {
             print("authorized")
         }
-        let count = db.objects(Location).count
-        locationsCountLabel.text = "Locations count: \(count)"
-        self.mapView.delegate = self
-        print(db.path)
-        
 
-//        let config = Realm.Configuration.defaultConfiguration
-//        self.mapView.realmConfiguration = config
-        self.mapView.fetchedResultsController.clusterTitleFormatString = "$OBJECTSCOUNT points in this area"
+        // print(db.path)
+
+        // try! db.write {
+        //     db.deleteAll()
+        // }
+
+        // try! db.write {
+        //     for info in Point().points() {
+        //         let dateFormatter = NSDateFormatter()
+        //         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+        //         var date = dateFormatter.dateFromString(info[2])
+
+        //         if (date == nil) {
+        //             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        //             date = dateFormatter.dateFromString(info[2])
+        //         }
+
+        //         print(date)
+
+        //         let attrs = [
+        //             "lat": info[0],
+        //             "lon": info[1]
+        //         ]
+
+        //         var newL = Location()
+        //         newL.latitude = Double(attrs["lat"]!)!
+        //         newL.longitude = Double(attrs["lon"]!)!
+        //         newL.date =  date!
+
+        //         db.add(newL)
+        //     }
+        // }
+        // print(db.objects(Location).count)
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,41 +77,29 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
       // MARK: Core Location
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      print("location changed")
-      for location in locations {
-            let newLocation =  Location(value: ["latitude": location.coordinate.latitude, "longitude": location.coordinate.longitude])
-            try! db.write {
-                db.add(newLocation)
+        try! db.write {
+            for location in locations {
+                let attributes = [
+                    "latitude": location.coordinate.latitude,
+                    "longitude": location.coordinate.longitude
+                ]
+
+                db.add(Location(value: attributes))
             }
         }
-        
-        locationsCountLabel.text = "Locations count: \(db.objects(Location).count)"
-
+        locationManager.allowDeferredLocationUpdatesUntilTraveled(500, timeout: CLTimeIntervalMax)
     }
 
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        print("did change authorization status and")
         if status == .AuthorizedAlways {
-            print("is always authorized")
             locationManager.allowsBackgroundLocationUpdates = true
-            locationManager.distanceFilter = 10
-            locationManager.startUpdatingLocation()
+            locationManager.distanceFilter = 500
+            locationManager.startMonitoringSignificantLocationChanges()
         }
     }
 
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("location failed")
+        print("location manager failed")
     }
 
-}
-
-extension MainViewController: MKMapViewDelegate {
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        if let safeObjects = ABFClusterAnnotationView.safeObjectsForClusterAnnotationView(view) {
-            
-            if let firstObjectName = safeObjects.first?.toObject(Location).title {
-                print("First Object: \(firstObjectName)")
-            }
-        }
-    }
 }

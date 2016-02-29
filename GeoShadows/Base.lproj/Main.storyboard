@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -18,43 +17,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Locations Count: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Tg-rI-keL">
-                                <rect key="frame" x="29" y="20" width="352" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mGI-a2-kpw" customClass="RealmMapView" customModule="RealmMapView">
-                                <rect key="frame" x="29" y="110" width="457" height="441"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ijV-s0-Vzr" customClass="RealmMapView" customModule="RealmMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="entityName" value="Location"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="latitudeKeyPath" value="latitude"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="longitudeKeyPath" value="longitude"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="titleKeyPath" value="title"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="subtitleKeyPath" value="subtitle"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clusterAnnotations" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mGI-a2-kpw" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-20" id="6dH-AD-uvA"/>
-                            <constraint firstItem="mGI-a2-kpw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="9px-ae-f7k"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mGI-a2-kpw" secondAttribute="bottom" constant="-20" id="JJr-VQ-SjO"/>
-                            <constraint firstItem="mGI-a2-kpw" firstAttribute="top" secondItem="2Tg-rI-keL" secondAttribute="bottom" constant="-20" id="hmK-eJ-yV0"/>
+                            <constraint firstItem="ijV-s0-Vzr" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="PSt-dq-Xle"/>
+                            <constraint firstItem="ijV-s0-Vzr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Qod-7J-LeH"/>
+                            <constraint firstAttribute="trailing" secondItem="ijV-s0-Vzr" secondAttribute="trailing" id="TD1-Xz-5MZ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ijV-s0-Vzr" secondAttribute="bottom" id="Xnu-o7-e4s"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="6dH-AD-uvA"/>
-                                <exclude reference="9px-ae-f7k"/>
-                                <exclude reference="hmK-eJ-yV0"/>
-                                <exclude reference="JJr-VQ-SjO"/>
-                            </mask>
-                        </variation>
                     </view>
-                    <connections>
-                        <outlet property="locationsCountLabel" destination="2Tg-rI-keL" id="mlo-Jy-BjV"/>
-                        <outlet property="mapView" destination="mGI-a2-kpw" id="epq-eY-h5c"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

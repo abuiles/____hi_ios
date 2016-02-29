@@ -5,8 +5,8 @@
 //  Created by Adolfo on 1/28/16.
 //  Copyright © 2016 Adolfo Builes. All rights reserved.
 //
-
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+//        let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
+//            if oldSchemaVersion < 1 {
+//                migration.enumerate(Location.className()) { oldObject, newObject in
+//                    if oldSchemaVersion < 1 {
+//                        newObject?["date"] = NSDate()
+//                    }
+//                }
+//            }
+//        }
+//
+//        Realm.Configuration.defaultConfiguration = Realm.Configuration(schemaVersion: 1, migrationBlock: migrationBlock)
+//
+        // print out all migrated objects in the default realm
+        // migration is performed implicitly on Realm access
+        // print("Migrated objects in the default Realm: \(try! Realm().objects(Location))")
+
         return true
     }
 
@@ -43,4 +58,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
